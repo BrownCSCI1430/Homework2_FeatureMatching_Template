@@ -37,8 +37,8 @@ def estimate_fundamental_matrix(ground_truth_correspondence_file):
     F_path = ground_truth_correspondence_file[:-3] + 'npy'
     return np.load(F_path)
 
-def evaluate_correspondence(img_A, img_B, ground_truth_correspondence_file,
-	scale_factor, x1_est, y1_est, x2_est, y2_est, matches, filename="notre_dame_matches.jpg"):
+def evaluate_correspondence(img_A, img_B, ground_truth_correspondence_file, scale_factor, 
+	x1_est, y1_est, x2_est, y2_est, matches, filename="notre_dame_matches.jpg", visualize=True):
 
 	# 'unscale' feature points to compare with ground truth points
 	x1_est_scaled = x1_est / scale_factor
@@ -115,7 +115,8 @@ def evaluate_correspondence(img_A, img_B, ground_truth_correspondence_file,
 	accuracy = int(100 * correct_matches / len(matches)) if len(matches) else 0
 	print(f'Accuracy on all matches: {accuracy}%')
 
-	print("Vizualizing...")
-	visualize.show_correspondences(img_A, img_B, x1_est / scale_factor, y1_est / scale_factor, x2_est / scale_factor, y2_est / scale_factor, matches, good_matches, filename)
+	if visualize:
+		print("Vizualizing...")
+		visualize.show_correspondences(img_A, img_B, x1_est / scale_factor, y1_est / scale_factor, x2_est / scale_factor, y2_est / scale_factor, matches, good_matches, filename)
 
 	return accuracy
