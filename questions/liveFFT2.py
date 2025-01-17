@@ -80,7 +80,7 @@ class live_FFT2():
 
         if self.use_camera == False:
             # No camera!
-            self.im = rgb2gray(img_as_float32(io.imread('images/YuanningHuCrop.png'))) # One of our intrepid TAs (Yuanning was one of our HTAs for Spring 2019)
+            self.im = rgb2gray(img_as_float32(io.imread('images/GiraffeCrop.jpeg'))) # One of our intrepid TAs (Yuanning was one of our HTAs for Spring 2019)
         else:
             # We found a camera!
             # Requested camera size. This will be cropped square later on, e.g., 240 x 240
@@ -91,7 +91,7 @@ class live_FFT2():
         cv2.namedWindow(self.wn, 0)
 
         # Load the Merlin image for comparison
-        self.imMerlin = rgb2gray(img_as_float32(io.imread('images/MerlinCrop.png')))
+        self.imMerlin = rgb2gray(img_as_float32(io.imread('images/MerlinCrop.jpg')))
 
         # Main loop
         while True:
