@@ -59,7 +59,7 @@ class live_FFT2():
     wn = "FD"
     use_camera = True
     im = 0
-    imJack = 0
+    imMerlin = 0
     phaseOffset = 0
     rollOffset = 0
     # Variable for animating basis reconstruction
@@ -90,8 +90,8 @@ class live_FFT2():
         # Set the size of the output window
         cv2.namedWindow(self.wn, 0)
 
-        # Load the Jack image for comparison
-        self.imJack = rgb2gray(img_as_float32(io.imread('images/JacksonGibbonsCrop.png'))) # Another one of our intrepid TAs (Jack was one of our TAs for Spring 2017)
+        # Load the Merlin image for comparison
+        self.imMerlin = rgb2gray(img_as_float32(io.imread('images/MerlinCrop.png')))
 
         # Main loop
         while True:
@@ -215,14 +215,14 @@ class live_FFT2():
         # Part 2: Replacing amplitude / phase with that of another image
         # ==============================================================
         '''
-        imJack = cv2.resize( self.imJack, self.im.shape )
-        imJackFFT = np.fft.fft2( imJack )
-        amplitudeJack = np.sqrt( np.power( imJackFFT.real, 2 ) + np.power( imJackFFT.imag, 2 ) )
-        phaseJack = np.arctan2( imJackFFT.imag, imJackFFT.real )
+        imMerlin = cv2.resize( self.imMerlin, self.im.shape )
+        imMerlinFFT = np.fft.fft2( imMerlin )
+        amplitudeMerlin = np.sqrt( np.power( imMerlinFFT.real, 2 ) + np.power( imMerlinFFT.imag, 2 ) )
+        phaseMerlin = np.arctan2( imMerlinFFT.imag, imMerlinFFT.real )
         
         # Try uncommenting either of the lines below
-        #amplitude = amplitudeJack
-        #phase = phaseJack
+        #amplitude = amplitudeMerlin
+        #phase = phaseMerlin
         '''
 
         # Part 3: Replacing amplitude / phase with that of a noisy image
