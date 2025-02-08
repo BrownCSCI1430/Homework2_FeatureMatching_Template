@@ -9,112 +9,27 @@
 % > pdflatex thisfile.tex
 %
 % If you do not have LaTeX, your options are:
-% - VSCode extension: https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop
-% - Online Tool: https://www.overleaf.com/ - most LaTeX packages are pre-installed here (e.g., \usepackage{}).
 % - Personal laptops (all common OS): http://www.latex-project.org/get/ 
+% + VSCode extension: https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop
+% - Online Tool: https://www.overleaf.com/ - most LaTeX packages are pre-installed here (e.g., \usepackage{}).
 %
 % If you need help with LaTeX, please come to office hours.
 % Or, there is plenty of help online:
 % https://en.wikibooks.org/wiki/LaTeX
 %
 % Good luck!
-% The CSCI 1430 staff
+% The CSCI1430 staff
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[11pt]{article}
-
-\usepackage[english]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{amssymb}
-\usepackage{xcolor}
-\usepackage[colorlinks = true,
-            linkcolor = blue,
-            urlcolor  = blue]{hyperref}
-\usepackage[a4paper,margin=1.5in]{geometry}
-\usepackage{stackengine,graphicx}
-\usepackage{fancyhdr}
-\setlength{\headheight}{15pt}
-\usepackage{microtype}
-\usepackage{times}
-\usepackage[shortlabels]{enumitem}
-\setlist[enumerate]{topsep=0pt}
-\usepackage{amsmath}
-\usepackage{framed}
-\usepackage{mdframed}
-\usepackage{xcolor}
-\usepackage[most]{tcolorbox}
-
-% a great python code format: https://github.com/olivierverdier/python-latex-highlighting
-\usepackage{pythonhighlight}
-
-\usepackage{trimclip,lipsum}
-
-\frenchspacing
-\setlength{\parindent}{0cm} % Default is 15pt.
-\setlength{\parskip}{0.3cm plus1mm minus1mm}
-
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{Homework 2 Written Questions}
-\rhead{CSCI 1430}
-\lfoot{\textcolor{red}{\textbf{Only}
-\ifcase\thepage
-\or \textbf{instructions}
-\or \textbf{Generative AI}
-\or \textbf{Q1}
-\or \textbf{Q1 (a) - (b)}
-\or \textbf{Q1 (c) - (d)}
-\or \textbf{Q1 (e)}
-\or \textbf{Q2 (a)}
-\or \textbf{Q2 (b)}
-\or \textbf{Q2 (c)}
-\or \textbf{Q3 (a)}
-\or \textbf{Q3 (b) - (c)}
-\or \textbf{Q4 (a)}
-\or \textbf{Q4 (b)}
-\or \textbf{Q5}
-\or \textbf{Q6}
-\or \textbf{Q6}
-\or \textbf{feedback}
-\else
-[ERROR: PAGE MISALIGNMENT]
-\fi
-\textbf{should be on this page}
-}}
-\rfoot{\thepage~/ 17}
-
-
-\date{}
-
-\title{\vspace{-1cm}Homework 2 Written Questions}
-
+\documentclass{csci1430}
 
 \begin{document}
+\title{Homework 1 Written Questions}
 \maketitle
 \thispagestyle{fancy}
 
-\section*{Template Instructions}
-
-This document is a template with specific answer regions and a fixed number of pages. Given large class sizes and limited TA time, the template helps the course staff to grade efficiently and still focus on the content of your submissions. Please help us in this task:
- 
-\begin{itemize}
-  \item Make this document anonymous.
-  
-  \item Questions are in the orange boxes. Provide answers in the green boxes.
-  \item Use the footer to check for correct page alignment.
-
-  \item \textbf{Do NOT remove the answer box.}
-  \item \textbf{Do NOT change the size of the answer box.}
-  \item \textbf{Extra pages are not permitted unless otherwise specified.}
-  \item \textbf{Template edits or page misalignment will lead to a 10 point deduction.}
-\end{itemize}
-
-\section*{Gradescope Submission}
-\begin{itemize}
-  \item Compile this document to a PDF and submit it to Gradescope.
-  \item Pages will be automatically assigned to the right questions on Gradescope.
-\end{itemize}
+\writeinstructions
 
 \section*{This Homework}
 \begin{itemize}
@@ -124,50 +39,15 @@ This document is a template with specific answer regions and a fixed number of p
 
 % Please leave the pagebreak
 \pagebreak
-
-\section*{Declaration of Generative AI Use}
-
-\subsection*{Reminder of Course Policy}
-
-\begin{itemize}
-    \item The use of GenAI tools (e.g., ChatGPT, Grammarly, Bard) for completing any part of this course is discouraged.
-    \item Using these tools is not needed to be successful in the class and could be detrimental to your learning experience.
-    \item If you use them, you must cite the tool you used and explain how you used it.
-    \item If you do not cite the tool, it is an academic code violation.
-    \item We will be using special tools to detect cases of unattributed GenAI use.
-\end{itemize}
-
-\subsection*{Student Declaration}
-
-\subsubsection*{Have you used generative AI tools to complete this assignment:}
-
-%%%%%%%%%%%%%% TODO %%%%%%%%%%%%%%%%%%%%
-
-YES $\square$ NO $\blacksquare$ % change answer to \blacksquare
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsubsection*{If you answered YES above, describe what tools you used and what parts of the assignment you used them for below:}
-
-%%%%%%%%%%%%%% TODO %%%%%%%%%%%%%%%%%%%%
-
-\textit{Example: I used ChatGPT to debug my convolution implementation}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ------------------------------------------------ %
-\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\paragraph{Q1:} \textbf{[10 points]} 
-
-Let's look again at the webcam Fourier decomposition demo that we saw in class. The Fourier transform lets us operate on images with respect to their frequency content. 
-
-\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black]
-Navigate to the \texttt{questions} folder. Then, within your virtual environment, run the following command:
+\begin{question}[points=10] 
+Let's look again at the webcam Fourier decomposition demo that we saw in class. The Fourier transform lets us operate on images with respect to their frequency content. Navigate to the \texttt{questions} folder. Then, within your virtual environment, run the following command:
 \begin{verbatim}
 $ python liveFFT2.py
 \end{verbatim}
+\end{question}
 
 \emph{Note: Your computer must have a webcam. If it does not, find the \textbf{use\_webcam} variable and set it to false. If you're running an exotic setup, like from within WSL, then your webcam might not be accessible.}
 \\
@@ -189,238 +69,149 @@ You \textbf{will} have to answer short responses and screenshots in the followin
 \\
 \\
 \emph{Note:} Please keep grading anonymous. Use your cat as a model, show your favourite vector calculus book, etc. Extra credit for creative effort.
-\end{tcolorbox}
+
 \newpage
 
-\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black]
-In the following questions, please include a screenshot for the given part as well as answer a short response. \textbf{[1-2 sentences]}.
-\end{tcolorbox} 
+In the following subquestions, please include a screenshot for the given part as well as answer a short response. \textbf{[1-2 sentences]}.
 
-\begin{enumerate}[(a)]
-\item \textbf{[2 points]}
+\begin{subquestion}[points=2]
 In \textbf{Part 0}, the reconstructed image (top right) looks like bars of black and white lines rather than the image to the left of it. Why is this? Hint: Look what we do after zero-ing out the amplitude and phase.
+\end{subquestion}
 
-\begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%% Replace TODO_<placeholder.png> with your picture %%%%%
-        \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part0.png}
-        
-        TODO: Your answer for (a) here %%%%%% Remove this line in your answer! %%%%%%
-        
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-3\baselineskip\relax{} 0in 0pt}{\copy0}
-\end{tcolorbox}
+\begin{answer}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part0.png}
 
-\item \textbf{[2 points]}
+TODO: Your answer for (a) here
+\end{answer}
+
+\begin{subquestion}[points=2]
 In \textbf{Part 1}, what is the relation between how many bases are applied and the reconstructed image (top right image)?
+\end{subquestion}
 
-\begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%% Replace TODO_<placeholder.png> with your picture %%%%%
-        \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part1.png}
-        
-        TODO: Your answer for (b) here %%%%%% Remove this line in your answer! %%%%%%
-        
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-4\baselineskip\relax{} 0in 0pt}{\copy0}
-\end{tcolorbox}
+\begin{answer}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part1.png}
+
+TODO: Your answer here
+\end{answer}
 
 \newpage
 
-\item \textbf{[2 points]}
+\begin{subquestion}[points=2]
 In \textbf{Part 2} and \textbf{Part 3}, after replacing the phase/amplitude with the phase/amplitude of the image of Jack or the noisy image, which do you think contributes more to the reconstruction?
+\end{subquestion}
 
-\begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%% Replace TODO_<placeholder.png> with your picture %%%%%
-        \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part2.png}
-        \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part3.png}
+\begin{answer}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part2.png}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part3.png}
         
-        TODO: Your answer for (c) here %%%%%% Remove this line in your answer! %%%%%%
-        
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-4\baselineskip\relax{} 0in 0pt}{\copy0}
-\end{tcolorbox}
+TODO: Your answer here
+\end{answer}
 
-\item \textbf{[2 points]}
-After \textbf{Part 4}, describe the effect of one modification you saw in the demo after playing around with the phase or amplitude in relation to the reconstructed image. 
+\begin{subquestion}[points=2]
+After \textbf{Part 4}, describe the effect of one modification you saw in the demo after playing around with the phase or amplitude in relation to the reconstructed image.
+\end{subquestion}
 
-\begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%% Replace TODO_<placeholder.png> with your picture %%%%%
-        \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part4.png}
-        
-        TODO: Your answer for (d) here %%%%%% Remove this line in your answer! %%%%%%
-        
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-4\baselineskip\relax{} 0in 0pt}{\copy0}
-\end{tcolorbox}
+\begin{answer}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Part4.png}
+    
+TODO: Your answer here.
+\end{answer}
 
 \newpage
 
-\item \textbf{[2 points]} In the demo you saw how the Fourier Transform deconstructs an image into amplitude and phase, then subsequently transforms it back into a reconstructed image. This process has a fairly nifty use-case in relation to convolution that we went over in lecture. In your own words, what is The Convolution Theorem? More specifically, how does this theorem along with the Inverse Fast Fourier Transform provide a beneficial use case in relation to convolution time complexity? [2-3 sentences]
+\begin{subquestion}[points=2]
+In the demo you saw how the Fourier Transform deconstructs an image into amplitude and phase, then subsequently transforms it back into a reconstructed image. This process has a use in relation to convolution that we discussed in lecture. In your own words, what is The Convolution Theorem and what benefits can it provide? \textbf{[2-3 sentences]}
+\end{subquestion}
 
-\begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        
-        TODO: Your answer for (e) here %%%%%% Remove this line in your answer! %%%%%%
-        
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-6\baselineskip\relax{} 0in 0pt}{\copy0}
-\end{tcolorbox}
+\begin{answer}
+TODO: Your answer here
+\end{answer}
 
-
-\end{enumerate}
 
 \pagebreak
+%%%%%%%%%%%%%%%%%%%%%
 
 
-\paragraph{Q2:} \textbf{[9 points]} Often in computer vision, we wish to find points in one image that match to the same world point in another image---so-called correspondence finding.
+Often in computer vision, we wish to find points in one image that match to the same world point in another image---so-called correspondence finding.
 
-\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black]
+\begin{question}[points=9] 
 In the following three pairs of images, please use the included python script \texttt{plot\_corners.py} to find corners using the Harris corner detection algorithm. Run the script with \texttt{python plot\_corners.py \{example\}} where \texttt{\{example\}} is one of \{\texttt{RISHLibrary}, \texttt{Chase}, \texttt{LaddObservatory}\}.
 
 For each pair, discuss any differences in the returned corners, the properties of the images that create these differences, and any underlying real world phenomena that may have been the primary cause of these differences. \textbf{[3--5 sentences]}
-\end{tcolorbox}
+\end{question}
 
-\begin{enumerate}[(a)]
-    \item \textbf{[3 points]}
-    RISHLibrary: 
-    \href{images/RISHLibrary1.jpg}{RISHLibrary1.jpg} and \href{images/RISHLibrary2.jpg}{RISHLibrary2.jpg} 
-    \begin{tcolorbox}[colback=white!5!white,colframe=green!75!black,breakable]
-    %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%% Replace TODO_<placeholder.png> with your picture %%%%%
-    \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_RishLibrary1.png}
+RISHLibrary: [3 points]
+\href{images/RISHLibrary1.jpg}{RISHLibrary1.jpg} and \href{images/RISHLibrary2.jpg}{RISHLibrary2.jpg} 
 
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-    
-    TODO: Your answer for (a) here %%%%%% Remove this line in your answer! %%%%%%
-    
-    
-    %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    }}
-    \clipbox{0pt \dimexpr\dp0-12\baselineskip\relax{} 0in 0pt}{\copy0}
-    \end{tcolorbox}
+\begin{answer}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_RishLibrary1.png}
 
-    \pagebreak
-    \item \textbf{[3 points]}
-    Chase:
-    \href{images/Chase1.jpg}{Chase1.jpg} and \href{images/Chase2.jpg}{Chase2.jpg}
-    \begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%% Replace TODO_<placeholder.png> with your picture %%%%%
-    \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Chase1.png}
+TODO: Your answer here
+\end{answer}
+
+\pagebreak
+
+Chase: [3 points]
+\href{images/Chase1.jpg}{Chase1.jpg} and \href{images/Chase2.jpg}{Chase2.jpg}
+
+\begin{answer}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Chase1.png}
+
+TODO: Your answer here
+\end{answer}
     
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-    
-    TODO: Your answer for (b) here %%%%%% Remove this line in your answer! %%%%%%
-    
-    
-    %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    }}
-    \clipbox{0pt \dimexpr\dp0-12\baselineskip\relax{} 0in 0pt}{\copy0}
-    \end{tcolorbox}
-    
-    \pagebreak
-    \item \textbf{[3 points]} 
-    LaddObservatory: 
-    \href{images/LaddObservatory1.jpg}{LaddObservatory1.jpg} and \href{images/LaddObservatory2.jpg}{LaddObservatory2.jpg}
-    \begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    
-    %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%% Replace TODO_<placeholder.png> with your picture %%%%%
-    \includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Ladd1.png}
-    
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-    
-    TODO: Your answer for (c) here %%%%%% Remove this line in your answer! %%%%%%
-    
-    
-    %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    }}
-    \clipbox{0pt \dimexpr\dp0-12\baselineskip\relax{} 0in 0pt}{\copy0}
-    \end{tcolorbox}
-\end{enumerate}
+\pagebreak
+
+
+LaddObservatory: [3 points]
+\href{images/LaddObservatory1.jpg}{LaddObservatory1.jpg} and \href{images/LaddObservatory2.jpg}{LaddObservatory2.jpg}
+
+\begin{answer}
+\includegraphics[width=0.5\textwidth,height=7cm,keepaspectratio]{images/TODO_Ladd1.png}
+
+TODO: Your answer here
+\end{answer}
 
 
 \pagebreak
-\paragraph{Q3:} \textbf{[9 points]} One use of local feature description and matching is \href{https://www.youtube.com/watch?v=xD88Qs_DZp4}{fingerprint recognition}---please watch the video and note the similarity to our task in this homework. 
+
+\begin{question}[points=9,orangebox=false] 
+One use of local feature description and matching is \href{https://youtu.be/xD88Qs_DZp4?t=11}{fingerprint recognition}---please watch the video and note the similarity to our task in this homework. 
 
 Fingerprint recognition uses biometric data---measurements of human biological features that are unique to an individual---to make it convenient to unlock doors or devices quickly and without needing to remember a password. However, given its uniqueness, biometric data may be seen as a greater privacy encroachment upon a person than a password. Further, given the trust that is derived from the uniqueness of biometric data, it may also pose a greater risk of misuse if the data is not secure because the data cannot be changed.
+\end{question}
 
-\begin{enumerate}[(a)]
-    \item \textbf{[3 points]}
-    \begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black]
-    Do you use biometric recognition systems? List them. [If not, list some that people around you use.]
-    For one of the systems you use, where is the reference data stored (such as your stored fingerprint), and where and how does the authentication process happen (at a high level)? 
-    Try to find the answer online; \href{https://ievoreader.com/how-biometric-data-is-stored/}{this article} may also help. \textbf{[4--6 sentences]}
-    \end{tcolorbox}
+\begin{subquestion}[points=3]
+Do you use biometric recognition systems? List them. [If not, list some that people around you use.]
+For one of the systems you use, where is the reference data stored (such as your stored fingerprint), and where and how does the authentication process happen (at a high level)? 
+Try to find the answer online; \href{https://ievoreader.com/how-biometric-data-is-stored/}{this article} may also help. \textbf{[4--6 sentences]}
+\end{subquestion}
     
-    \begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-        TODO: Your answer for (a) here %%%%%% Remove this line in your answer! %%%%%%
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-12\baselineskip\relax{} 0in 0pt}{\copy0}
-    \end{tcolorbox}
-
-    \pagebreak
-    \item \textbf{[3 points]}
-    \begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black]
-    How might someone use computer vision to steal or spoof your biometric data to gain access? \emph{This could be across reconstruction, recognition, or (re)organization.} \textbf{[3--5 sentences]}
-    \end{tcolorbox}
-
-    \begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-        TODO: Your answer for (b) here %%%%%% Remove this line in your answer! %%%%%%
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-12\baselineskip\relax{} 0in 0pt}{\copy0}
-    \end{tcolorbox}
-
-
-    \item
-    \textbf{[3 points]}
-    \begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black]
-    Biometric recognition systems may not affect all people equally. For a biometric identification system, define a group of people and describe how they might be affected disproportionately. \textbf{[3--5 sentences]}
-    \end{tcolorbox}
-    
-    \begin{tcolorbox}[colback=white!5!white,colframe=green!75!black]
-    \setbox0=\hbox{\parbox[t]{\textwidth}{
-        %%%%%%% ANSWER STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-        TODO: Your answer for (c) here %%%%%% Remove this line in your answer! %%%%%%
-            
-        %%%%%%% ANSWER ENDS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        }}
-    \clipbox{0pt \dimexpr\dp0-12\baselineskip\relax{} 0in 0pt}{\copy0}
-    \end{tcolorbox}
-\end{enumerate}
+\begin{answer}
+TODO your answer here.
+\end{answer}
 
 \pagebreak
 
+\begin{subquestion}[points=3]
+How might someone use computer vision to steal or spoof your biometric data to gain access? \emph{This could be across reconstruction, recognition, or (re)organization.} \textbf{[3--5 sentences]}
+\end{subquestion}
 
+\begin{answer}
+TODO your answer here.
+\end{answer}
+    
+
+\begin{subquestion}[points=3]
+Biometric recognition systems may not affect all people equally. For a biometric identification system, define a group of people and describe how they might be affected disproportionately. \textbf{[3--5 sentences]}
+\end{subquestion}
+    
+\begin{answer}
+TODO your answer here.
+\end{answer}
+    
+
+\pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \paragraph{Q4:} \textbf{[7 points]} Brown University decides to entirely replace passwords with biometric data to authenticate student identity on its computer systems. Given how accurate your feature matching homework 2 code is, Brown asks you to develop the authentication system as your CSCI 1430 final project. Lucky you.
