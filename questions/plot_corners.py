@@ -38,7 +38,7 @@ def main():
     harris_response2 = corner_harris(image2)
 
     ##############
-    # TODO: Feel free to play around with these parameters to investigate their effects
+    # TODO: Play with these parameters to investigate their effects
     min_distance = 5
     threshold_rel = 0.05
     ##############
