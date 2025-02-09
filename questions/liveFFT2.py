@@ -85,8 +85,8 @@ class live_FFT2():
         cv2.namedWindow(self.wn, cv2.WINDOW_AUTOSIZE)
 
         # Load two images
-        self.imRaraMama = rgb2gray(img_as_float32(io.imread('questions/images/GiraffeCrop.jpg')))
-        self.imMerlinTheCat = rgb2gray(img_as_float32(io.imread('questions/images/MerlinCrop.jpg')))
+        self.imRaraMama = rgb2gray(img_as_float32(io.imread('images/GiraffeCrop.jpg')))
+        self.imMerlinTheCat = rgb2gray(img_as_float32(io.imread('images/MerlinCrop.jpg')))
 
         # Initialize camera
         # The argument is the device id. 
