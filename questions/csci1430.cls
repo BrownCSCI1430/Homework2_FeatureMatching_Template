@@ -317,4 +317,4 @@
 \fi
 \textbf{should be on this page}
 }}
-\rfoot{\thepage~/ 17}
+\rfoot{\thepage~/ 15}
