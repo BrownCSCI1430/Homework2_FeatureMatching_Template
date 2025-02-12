@@ -43,6 +43,7 @@ __license__ = "GPLv3+"
 __date__ = "2014/01/25; modifications 2017 onwards"
 __status__ = "v2.1"
 
+import os
 import cv2 # opencv-based functions
 import time
 import math
@@ -63,6 +64,7 @@ class live_FFT2():
     imRaraMama = None
     
     pause = False
+    quit = False
     drawText = True
     blankInput = False
 
@@ -85,8 +87,12 @@ class live_FFT2():
         cv2.namedWindow(self.wn, cv2.WINDOW_AUTOSIZE)
 
         # Load two images
-        self.imRaraMama = rgb2gray(img_as_float32(io.imread('images/GiraffeCrop.jpg')))
-        self.imMerlinTheCat = rgb2gray(img_as_float32(io.imread('images/MerlinCrop.jpg')))
+        im1f = 'images/GiraffeCrop.jpg'
+        im2f = 'images/MerlinCrop.jpg'
+        im1f = im1f if os.path.isfile(im1f) else 'questions/' + im1f
+        im2f = im2f if os.path.isfile(im2f) else 'questions/' + im2f
+        self.imRaraMama = rgb2gray(img_as_float32(io.imread(im1f)))
+        self.imMerlinTheCat = rgb2gray(img_as_float32(io.imread(im2f)))
 
         # Initialize camera
         # The argument is the device id. 
@@ -129,6 +135,9 @@ class live_FFT2():
             key = cv2.waitKey(1)
             self.readKeyboard(key)
             #print('framerate = {} fps \r'.format(1. / (time.perf_counter() - a)))
+
+            if self.quit:
+                break
     
         if self.use_camera:
             # Stop camera
@@ -140,7 +149,7 @@ class live_FFT2():
             CSCI 1430 Fourier Transform Demo 
             --------------------------------
 
-            0,1,2,3,4,5 = Homework parts
+            0,1,2,3,4,5 = Homework parts --- the buttons won't work until you uncomment each
             p = Toggle pause of camera read and processing
             t = Toggle text
               
@@ -171,6 +180,8 @@ class live_FFT2():
             self.animateOrientation = not self.animateOrientation
         elif key == ord('m'):
             self.animateMagnitude = not self.animateMagnitude
+        elif key == 27:
+            self.quit = True
 
         return
 
@@ -179,6 +190,9 @@ class live_FFT2():
         if self.use_camera:
             # Read image.
             rval, self.im = self.vc.read()
+            # Some students' cameras did not return a 320 x 240 image. 
+            # If you have an error about image sizes not matching for Part 3, try uncommenting this line.
+            # self.im = cv2.resize(self.im, (320, 240), interpolation=cv2.INTER_AREA)
 
             # Convert to grayscale float32
             tmp = rgb2gray(img_as_float32(self.im))
