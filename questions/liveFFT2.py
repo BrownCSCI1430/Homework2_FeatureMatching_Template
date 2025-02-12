@@ -190,13 +190,15 @@ class live_FFT2():
         if self.use_camera:
             # Read image.
             rval, self.im = self.vc.read()
-            # Some students' cameras did not return a 320 x 240 image. 
-            # If you have an error about image sizes not matching for Part 3, try uncommenting this line.
-            # self.im = cv2.resize(self.im, (320, 240), interpolation=cv2.INTER_AREA)
 
             # Convert to grayscale float32
             tmp = rgb2gray(img_as_float32(self.im))
-            
+
+            # Some students' cameras did not return a 320 x 240 image. 
+            # If you have an error about image sizes not matching for Part 3, try uncommenting this line.
+            if tmp.shape != (240,320):
+                tmp = cv2.resize(tmp, (320,240), interpolation=cv2.INTER_AREA)
+
             # Crop to square
             # 1. It's not necessary as a square; just easier for didactic reasons
             # 2. Some cameras across the class are returning different image sizes
