@@ -31,7 +31,7 @@ Output image visualization:
 
 $ ./liveFFT2.py
 
-Required: A Python 3.x installation (tested on 3.9.19),
+Required: A Python 3.x installation (tested on 3.12.x),
 with: 
     - OpenCV (for camera reading)
     - numpy, matplotlib, scipy, argparse

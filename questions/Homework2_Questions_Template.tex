@@ -5,13 +5,10 @@
 % This is a LaTeX document. LaTeX is a markup language for producing documents. 
 % You will fill out this document, compile it into a PDF document, then upload the PDF to Gradescope. 
 %
-% To compile into a PDF on department machines:
-% > pdflatex thisfile.tex
-%
-% If you do not have LaTeX, your options are:
-% - Personal laptops (all common OS): http://www.latex-project.org/get/ 
+% To compile it into a PDF you can:
+% - Use vscode! Install a LaTeX distribution (all common OS): http://www.latex-project.org/get/ 
 % + VSCode extension: https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop
-% - Online Tool: https://www.overleaf.com/ - most LaTeX packages are pre-installed here (e.g., \usepackage{}).
+% - Use an online tool: https://www.overleaf.com/ - most LaTeX packages are pre-installed here (e.g., \usepackage{}).
 %
 % If you need help with LaTeX, please come to office hours.
 % Or, there is plenty of help online:
@@ -24,6 +21,11 @@
 
 \documentclass{csci1430}
 
+% TAs-only: compile once with export enabled to generate csci1430_expectedpages.tex
+%\EnableExpectedPagesExport{csci1430_expectedpages.tex}
+\LoadExpectedPages{csci1430_expectedpages.tex}
+\HomeworkShortName{HW2}
+
 \begin{document}
 \title{Homework 2 Written Questions}
 \maketitle
@@ -31,16 +33,9 @@
 
 \writeinstructions
 
-\section*{This Homework}
-\begin{itemize}
-    \item 6 questions \textbf{[10 + 9 + 9 + 7 + 3 + 5 = 43 points]}.
-    \item Include code, images, and equations where appropriate.
-\end{itemize}
-
 % Please leave the pagebreak
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \begin{question}[points=10] 
 Let's look again at the webcam Fourier decomposition demo that we saw in class. The Fourier transform lets us operate on images with respect to their frequency content. Navigate to the \texttt{questions} folder. Then, within your virtual environment, run the following command:
