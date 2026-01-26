@@ -66,8 +66,9 @@ def get_feature_points(image, window_width):
 
     # TODO: Your implementation here!
     # These are placeholders - replace with the coordinates of your feature points!
-    xs = np.random.randint(0, image.shape[1], size=100)
-    ys = np.random.randint(0, image.shape[0], size=100)
+    rng = np.random.default_rng()
+    xs = rng.integers(0, image.shape[1], size=100)
+    ys = rng.integers(0, image.shape[0], size=100)
 
     return xs, ys
 
@@ -153,7 +154,8 @@ def get_feature_descriptors(image, xs, ys, window_width, mode):
 
     # TODO: Your implementation here!
     # These are placeholders - replace with the coordinates of your feature points!
-    features = np.random.randint(0, 255, size=(len(xs), np.random.randint(1, 200)))
+    rng = np.random.default_rng()
+    features = rng.integers(0, 255, size=(len(xs), rng.integers(1, 200)))
 
     return features
 
@@ -203,6 +205,7 @@ def match_features(im1_features, im2_features):
 
     # TODO: Your implementation here!
     # These are placeholders - replace with the coordinates of your feature points!
-    matches = np.random.randint(0, min(len(im1_features), len(im2_features)), size=(50, 2))
+    rng = np.random.default_rng()
+    matches = rng.integers(0, min(len(im1_features), len(im2_features)), size=(50, 2))
 
     return matches

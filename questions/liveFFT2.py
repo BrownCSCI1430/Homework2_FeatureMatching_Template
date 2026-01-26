@@ -372,7 +372,8 @@ class live_FFT2():
         elif self.hw2part == 4:
             '''
             # Generate some noise
-            self.uniform_noise = np.random.uniform( 0, 1, self.im.shape )
+            rng = np.random.default_rng()
+            self.uniform_noise = rng.uniform( 0, 1, self.im.shape )
             imNoiseFFT = np.fft.fft2( self.uniform_noise )
             amplitudeNoise = np.sqrt( np.power( imNoiseFFT.real, 2 ) + np.power( imNoiseFFT.imag, 2 ) )
             phaseNoise = np.arctan2( imNoiseFFT.imag, imNoiseFFT.real )
