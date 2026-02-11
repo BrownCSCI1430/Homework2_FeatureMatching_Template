@@ -33,87 +33,63 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{question}[points=10] 
-Let's look again at the webcam Fourier decomposition demo that we saw in class. The Fourier transform lets us operate on images with respect to their frequency content. Navigate to the \texttt{questions} folder. Then, within your virtual environment, run the following command:
+Let's look again at the Fourier decomposition demo that we saw in class. The Fourier transform lets us operate on images with respect to their frequency content via the \textbf{amplitude} (or magnitude) and the \textbf{phase}. Navigate to the \texttt{questions} folder. Then, within your virtual environment, run the following command:
 \begin{verbatim}
-$ python liveFFT2.py
+$ uv pip install dearpygui
+$ cd questions/fourierdemo
+$ uv run python liveFourier.py
 \end{verbatim}
-\end{question}
+Play with the demo!
+To consider the properties of the Fourier domain, it will help to use 'Cat Mode' so that we see a fixed image (of a cat).
 
-\emph{Note: Your computer must have a webcam. If it does not, find the \textbf{use\_webcam} variable and set it to false. If you're running an exotic setup, like from within WSL, then your webcam might not be accessible.}
-\\
-\\
-The python file contains six parts for you better understand the Fourier transform and how manipulating the Fourier decomposition representation affects the reconstructed image. In the demo, top left is the input image, bottom left is the basis frequency amplitude image, bottom right is the corresponding phase image, and top right is the reconstruction of the input image via the Fourier representation.
+Then, for each transform listed in the rows below, please place \filled~in the columns that best describe the effects. There may be multiple for each row, or none.
 
 \begin{itemize}
-    \item Part 0: Decomposition and reconstruction of camera feed.
-    \item Part 1: Scanning the basis and observing the output image.
-    \item Part 2: Reconstructions from different numbers of basis frequencies.
-    \item Part 3: Replacing amplitude and phase with that from a different image.
-    \item Part 4: Replacing amplitude and phase with that from a noise image.
-    \item Part 5: Manipulating the amplitude and phase images.
+    \item In the demo, you may see minor changes in amplitude/phase due to image resampling, quantization, and clipping; try to ignore these and think about the \textbf{fundamental properties}: what should happen to amplitude and phase?
+    \item $I$ represents the image intensity, $x$ represents the image's pixel coordinates.
+    \item ``Scales same'' means shrinks when the input shrinks. \item ``Scales inverse'' means expands when the input shrinks.
 \end{itemize}
+\end{question}
 
-Within \verb!studentFuncs()!, uncomment the different parts and explore! In the demo, press the number keys to switch between parts.
-\\
-\\
-You will answer short responses and capture screenshots of the following parts, so you might want to answer them as you go!
-\\
-\\
-\emph{Note:} Please keep grading anonymous. Use your cat as a model, show your favourite vector calculus book, etc. Extra credit for creative effort.
-
-\newpage
-
-In the following subquestions, please include a screenshot for the given part as well as answer a short response. \textbf{[1-2 sentences]}.
-
-\begin{subquestion}[points=2]
-In \textbf{Part 1}, the reconstructed image (top right) looks like bars of black and white lines. Why is this? Hint: use 'm' and 'o' on your keyboard to animate the direction and distance from center of the dot in the bottom left.
-\end{subquestion}
-
-\begin{answer}[height=15]
-\includegraphics[width=0.4\textwidth,keepaspectratio]{images/TODO_yours.png}
-
-TODO: Your answer for (a) here
+\begin{answer}\noindent
+\setlength{\tabcolsep}{11pt}
+\begin{tabular}{l|c|c|c|c|c|c|c}
+\textbf{Input transform} & \rotatebox{90}{\textbf{Invariant}} & \rotatebox{90}{\textbf{Brighter}} & \rotatebox{90}{\textbf{DC only}} & \rotatebox{90}{\textbf{2D translates}} & \rotatebox{90}{\textbf{2D rotates}} & \rotatebox{90}{\textbf{2D scales same}} & \rotatebox{90}{\textbf{2D scales inverse}} \\
+\hline
+\textbf{Change intensity} ($I += 20$) & & & & & & & \\
+\hspace{0.1cm} \textit{Effect on amplitude} & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hspace{0.1cm} \textit{Effect on phase}     & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hline
+\textbf{Change intensity} ($I *= 1.2$) & & & & & & & \\
+\hspace{0.1cm} \textit{Effect on amplitude} & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hspace{0.1cm} \textit{Effect on phase}     & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hline
+\textbf{2D translate} ($x += 20$) & & & & & & & \\
+\hspace{0.1cm} \textit{Effect on amplitude} & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hspace{0.1cm} \textit{Effect on phase}     & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hline
+\textbf{2D rotate} ($x$ by $45^{\circ}$) & & & & & & & \\
+\hspace{0.1cm} \textit{Effect on amplitude} & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hspace{0.1cm} \textit{Effect on phase}     & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hline
+\textbf{2D scale} ($x *= 0.5$) & & & & & & & \\
+\hspace{0.1cm} \textit{Effect on amplitude} & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\hspace{0.1cm} \textit{Effect on phase}     & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
+\end{tabular}
 \end{answer}
 
-\begin{subquestion}[points=2]
-In \textbf{Part 2}, what is the relation between how many bases are applied and the reconstructed image?
-\end{subquestion}
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{answer}[height=15]
-\includegraphics[width=0.4\textwidth,keepaspectratio]{images/TODO_yours.png}
+\begin{question}[points=4]
+In class, we saw another demo that connected the Fourier domain to convolution. 
+\begin{verbatim}
+$ uv run python liveConvolutionTheorem.py
+\end{verbatim}
+Play with the demo!
 
-TODO: Your answer here
-\end{answer}
-
-\newpage
-
-\begin{subquestion}[points=2]
-In \textbf{Part 3}, we replace our input image phase with that of an image of Merlin the cat. In \textbf{Part 4} we replace the amplitude with noise. 
-Which of phase or amplitude contributes more to your perception of the reconstructed image and why?
-\end{subquestion}
-
-\begin{answer}[height=16]
-\includegraphics[width=0.4\textwidth,keepaspectratio]{images/TODO_yours.png}
-\includegraphics[width=0.4\textwidth,keepaspectratio]{images/TODO_yours.png}
-
-TODO: Your answer here
-\end{answer}
-
-\begin{subquestion}[points=2]
-After \textbf{Part 5}, describe the effect of one modification you saw in the demo after playing around with the phase or amplitude.
-\end{subquestion}
-
-\begin{answer}[height=16]
-\includegraphics[width=0.4\textwidth,keepaspectratio]{images/TODO_yours.png}
-    
-TODO: Your answer here.
-\end{answer}
-
-\newpage
-
-\begin{subquestion}[points=2]
-In the demo, we use the Fourier Transform to deconstruct an image into amplitude and phase, then reconstruct those back into an image. This process has a connection to convolution as we discussed in lecture. In your own words, what is The Convolution Theorem and what benefits can it provide? \textbf{[2-3 sentences]}
-\end{subquestion}
+In your own words, what is the connection between the Fourier domain and convolution, and what benefits can it provide? \textbf{[3-5 sentences]}
+\end{question}
 
 \begin{answer}[height=16]
 TODO: Your answer here
@@ -168,13 +144,19 @@ TODO: Your answer here
 \pagebreak
 
 \begin{question}[points=9,drawbox=false] 
-One use of local feature description and matching is \href{https://youtu.be/xD88Qs_DZp4?t=12}{fingerprint recognition}---please watch the video and note the similarity to our task in this homework. 
+One use of local feature description and matching is \href{https://youtu.be/xD88Qs_DZp4?t=12}{fingerprint recognition}---please watch the video and note the similarity to our task in this homework.
 
+\begin{minipage}{0.7\linewidth}
 Fingerprint recognition uses biometric data---measurements of human biological features that are unique to an individual---to unlock doors or devices quickly and without needing to remember a password. However, given its uniqueness, biometric data may be seen as a greater privacy encroachment upon a person than a password. Further, given the trust that is derived from the uniqueness of biometric data, it may also pose a greater risk of misuse if the data is not secure because the data cannot be changed.
+\end{minipage}\hspace{0.05\linewidth}
+\begin{minipage}{0.2\linewidth}
+\includegraphics[width=\linewidth]{./images/fingerprint.jpg}
+\end{minipage}
 \end{question}
 
 \begin{subquestion}[points=3]
 Do you use biometric recognition systems? List them. [If not, list some that people around you use.]
+
 For one of the systems you use, where is the reference data stored (such as your stored fingerprint), where does the authentication happen, and how does the authentication happen (at a high level)? 
 If you don't know, then try to find the answer online. \textbf{[4--6 sentences]}
 \end{subquestion}
@@ -206,11 +188,11 @@ TODO your answer here.
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{question}[points=7,drawbox=false] 
+\begin{subquestion}[points=7,drawbox=false] 
 Brown University decides to entirely replace passwords with biometric data to authenticate student identity on its computer systems. Given how accurate your feature matching homework 2 code is, Brown asks you to develop the authentication system as your CSCI 1430 final project. Lucky you.
 
-In preparation, you read a previous case about a \href{https://www.vpnmentor.com/blog/report-biostar2-leak/}{biometric data breach}.
-\end{question}
+In preparation, you read a previous case about a biometric data breach.\newline (See \textbf{BioStar2\_DataBreach.md})
+\end{subquestion}
 
 \begin{subquestion}[points=3]
 How were BioStar 2 storing their fingerprint data? Knowing the computer vision algorithms involved in feature matching, what different processing, features, or storage might you consider instead to decrease the risk of a biometric data breach? \textbf{[4--6 sentences]}
@@ -224,7 +206,7 @@ TODO: Your answer here.
 
 \begin{subquestion}[points=4,drawbox=false]
 Even though fingerprints are thought to be unique, we are bound by the accuracy of computer vision systems to detect and recognize that uniqueness.
-This may be a challenge for Brown's 10,000 students, let alone a national-scale database such as the FBI's \href{https://www.fbi.gov/services/cjis/fingerprints-and-other-biometrics/ngi}{Next Generation Identification System} that houses over \href{https://en.wikipedia.org/wiki/Next_Generation_Identification}{100 million fingerprints (since 2014)}; its Advanced Fingerprint Identification Technology is claimed to be 99.6\% accurate.
+This may be a challenge for Brown's 10,000 students, let alone a national-scale database such as the FBI's \href{https://www.fbi.gov/services/cjis/fingerprints-and-other-biometrics/ngi}{Next Generation Identification System} that houses around 190 million prints and conducts 170,000 daily assessments (Jan.~2026; see \textbf{NGI\_Jan2026\_SystemFactSheet.pdf}). NGI's Advanced Fingerprint Identification Technology is claimed to be 99.6\% accurate.
 
 Even seemingly high accuracies can create many inaccurate matches with large databases, potentially causing inaccurate judgements in criminal cases.
 \end{subquestion}
@@ -232,7 +214,8 @@ Even seemingly high accuracies can create many inaccurate matches with large dat
 \begin{orangebox}
 Fingerprint images are quite different from the images of natural `human-scale' scenes we've been using throughout the course. Is correspondence finding for fingerprint images an easier problem than for natural images? Why or why not? Think about the variation within each domain of images, the accuracy required, the consequences of a match (or lack thereof), the accuracy required, and the scope of the application. \textbf{[6--8 sentences]}
 
-\emph{Refer to the video at the beginning of Q3, and for more detail please refer to \href{http://biometrics.cse.msu.edu/Presentations/AnilJain_UniquenessOfFingerprints_NAS05.pdf}{the first 15 slides of this deck}---it has example fingerprints and additional information.}
+\vspace{0.25cm}
+\emph{Feel free to refer to the video at the beginning of Q3, and for more detail please refer to \href{http://biometrics.cse.msu.edu/Presentations/AnilJain_UniquenessOfFingerprints_NAS05.pdf}{the first 15 slides of this deck}---it has example fingerprints and additional information.}
 \end{orangebox}
 
 \begin{answer}[height=16]
@@ -247,59 +230,18 @@ TODO: Your answer here.
 \begin{question}[points=3,drawbox=false]
 As we saw in Q2, the Harris Corner Detector can find feature points for image matching.
 
-To detect these features, the algorithm approximates the strength of any change in the auto-correlation function $E(u, v)$ over shifts $u,v$. We look at the second derivative term in the Taylor series expansion of $E$ to consider the local shape of $E(u, v)$ via the \emph{structure tensor} $M$. Then, we analyze $M$ to determine if that pixel is a corner or not.
+To detect these features, the algorithm approximates the strength of any change in the auto-correlation function $E(u, v)$ over shifts $u,v$. We look at the second derivative term in the Taylor series expansion of $E$ to consider the local shape of $E(u, v)$ via the \emph{structure tensor} $M$ (often also called the second moment matrix). Then, we analyze $M$ to determine if that pixel is a corner or not.
 
-\textit{Note:} We expect this conceptual question to require careful study of the lecture slides. $M$ is also called the second moment matrix.
+\textit{Note:} We expect this conceptual question to require careful study of the lecture slides.
 \end{question}
 
 \begin{orangebox}
-How do the eigenvalues of the $M$ structure tensor vary with local image brightness, and how might we interpret the eigenvalues geometrically as an ellipse)? \textbf{6--8 sentences}
+How do the eigenvalues of the $M$ structure tensor vary with local image brightness, and how might we interpret the eigenvalues geometrically as an ellipse? \textbf{6--8 sentences}
 \end{orangebox}
 
 \begin{answer}[height=16]
 TODO here
 \end{answer}
-
-% Please leave the pagebreak
-\pagebreak
-
-\begin{question}[points=5,drawbox=false]
-The SIFT algorithm can extract feature descriptors around feature points. Given a feature point location, the SIFT algorithm converts a 16$\times$16 window around the feature point into a 128$\times$1 feature descriptor via a radial histogram of the gradient magnitudes within the window.
-\end{question}
-
-\begin{orangebox}
-Write pseudocode \emph{but with correct matrix/array indices} for descriptor extraction.
-
-\emph{Notes:} Do this for just one interest point at one scale; ignore the overall interest point orientation; ignore the Gaussian weighting; ignore all normalization post-processing; ignore image boundaries; ignore sub-pixel interpolation and just pick an arbitrary center within the 16$\times$16 for your feature descriptor.
-\end{orangebox}
-
-\begin{answer}[height=30]
-\begin{python}
-# You can assume access to the image, x and y gradients, 
-# and their magnitudes/orientations.
-image = imread("rara.jpg")
-grad_x = filter(image, "sobelX")
-grad_y = filter(image, "sobelY")
-grad_mag = sqrt(grad_x .^2 + grad_y.^2)
-grad_ori = atan2(grad_y, grad_x)
-
-# Takes in a interest point x,y location and returns 
-# a feature descriptor
-def SIFTdescriptor(x, y)
-    descriptor = zeros(128,1)
-    
-    # TODO: Populate descriptor with the right gradient 
-    # magnitudes dependent on the gradient orientations
-    
-
-
-
-
-
-    return descriptor
-\end{python}
-\end{answer}
-
 
 
 \pagebreak

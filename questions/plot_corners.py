@@ -2,7 +2,7 @@
 This code adapted from scikit-image documentation
 http://scikit-image.org/docs/dev/auto_examples/features_detection/plot_corner.html
 
-For CSCI1430 @ Brown University Spring 2019
+For CSCI1430 @ Brown University
 '''
 
 '''
