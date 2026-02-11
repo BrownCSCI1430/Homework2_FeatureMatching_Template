@@ -99,7 +99,6 @@ TODO: Your answer here
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%
 
-
 Often in computer vision, we wish to find points in one image that match to the same world point in another image---so-called correspondence finding.
 
 \begin{question}[points=9] 
@@ -142,6 +141,27 @@ TODO: Your answer here
 
 
 \pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{question}[points=3,drawbox=false]
+As we just saw, the Harris Corner Detector can find feature points for image matching.
+
+To detect these features, the algorithm approximates the strength of any change in the auto-correlation function $E(u, v)$ over shifts $u,v$. We look at the second derivative term in the Taylor series expansion of $E$ to consider the local shape of $E(u, v)$ via the \emph{structure tensor} $M$ (often also called the second moment matrix). Then, we analyze $M$ to determine if that pixel is a corner or not.
+
+\textit{Note:} We expect this conceptual question to require careful study of the lecture slides.
+\end{question}
+
+\begin{orangebox}
+How do the eigenvalues of the $M$ structure tensor vary with local image brightness, and how might we interpret the eigenvalues geometrically as an ellipse? \textbf{[6--8 sentences]}
+\end{orangebox}
+
+\begin{answer}[height=16]
+TODO: Your answer here.
+\end{answer}
+
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{question}[points=9,drawbox=false] 
 One use of local feature description and matching is \href{https://youtu.be/xD88Qs_DZp4?t=12}{fingerprint recognition}---please watch the video and note the similarity to our task in this homework.
@@ -220,27 +240,6 @@ Fingerprint images are quite different from the images of natural `human-scale' 
 
 \begin{answer}[height=16]
 TODO: Your answer here.
-\end{answer}
-
-
-\pagebreak
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\begin{question}[points=3,drawbox=false]
-As we saw in Q2, the Harris Corner Detector can find feature points for image matching.
-
-To detect these features, the algorithm approximates the strength of any change in the auto-correlation function $E(u, v)$ over shifts $u,v$. We look at the second derivative term in the Taylor series expansion of $E$ to consider the local shape of $E(u, v)$ via the \emph{structure tensor} $M$ (often also called the second moment matrix). Then, we analyze $M$ to determine if that pixel is a corner or not.
-
-\textit{Note:} We expect this conceptual question to require careful study of the lecture slides.
-\end{question}
-
-\begin{orangebox}
-How do the eigenvalues of the $M$ structure tensor vary with local image brightness, and how might we interpret the eigenvalues geometrically as an ellipse? \textbf{6--8 sentences}
-\end{orangebox}
-
-\begin{answer}[height=16]
-TODO here
 \end{answer}
 
 
