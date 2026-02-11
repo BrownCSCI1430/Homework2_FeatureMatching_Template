@@ -95,7 +95,6 @@ In your own words, what is the connection between the Fourier domain and convolu
 TODO: Your answer here
 \end{answer}
 
-
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%
 
@@ -143,19 +142,55 @@ TODO: Your answer here
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{question}[points=3,drawbox=false]
+\begin{question}[points=10,drawbox=false]
 As we just saw, the Harris Corner Detector can find feature points for image matching.
 
-To detect these features, the algorithm approximates the strength of any change in the auto-correlation function $E(u, v)$ over shifts $u,v$. We look at the second derivative term in the Taylor series expansion of $E$ to consider the local shape of $E(u, v)$ via the \emph{structure tensor} $M$ (often also called the second moment matrix). Then, we analyze $M$ to determine if that pixel is a corner or not.
+To detect these features, the algorithm approximates the strength of any change in the windowed auto-correlation function $E(u, v)$ over shifts $u,v$. We look at the second derivative term in the Taylor series expansion of $E$ to consider the local shape of $E(u, v)$ via the \emph{structure tensor} $M$ (often also called the second moment matrix).
 
-\textit{Note:} We expect this conceptual question to require careful study of the lecture slides.
+\[
+M = \sum_{(x,y) \in W} w(x,y)
+\begin{bmatrix}
+I_x^2 & I_x I_y \\
+I_x I_y & I_y^2
+\end{bmatrix}
+\]
+
+where $w$ is typically a Gaussian window function. Then, we analyze $M$ to determine if that pixel is a corner or not.
+
+\textit{Note:} This question requires careful study and a precise answer.
 \end{question}
 
-\begin{orangebox}
-How do the eigenvalues of the $M$ structure tensor vary with local image brightness, and how might we interpret the eigenvalues geometrically as an ellipse? \textbf{[6--8 sentences]}
-\end{orangebox}
+\begin{subquestion}[points=3]
+Consider the spatial derivatives $I_x$ and $I_y$ at each pixel in the window $W$. Suppose we plotted these $(I_x, I_y)$ values as points in a 2D scatter plot. Describe the shape or distribution of the points that would form for (i) a flat region, (ii) an edge, and (iii) a corner. \textbf{[3--5 sentences]}
+\end{subquestion}
+
+\begin{answer}[height=14]
+TODO: Your answer here.
+
+(i)
+
+(ii)
+
+(iii)
+\end{answer}
+
+\pagebreak
+
+\begin{subquestion}[points=3]
+Suppose we consider the eigendecomposition of the structure tensor $M$. How do the eigenvalues of $M$ relate to the local image intensity patterns, and how might we interpret the eigenvalues geometrically as an ellipse? \textbf{[6--8 sentences]}
+\end{subquestion}
 
 \begin{answer}[height=16]
+TODO: Your answer here.
+\end{answer}
+
+\pagebreak
+
+\begin{subquestion}[points=4]
+$M$ is constructed using image derivatives $I_x$ and $I_y$ from the horizontal and vertical axes. We know that real-world edges are rarely axis-aligned, yet the Harris detector is rotationally invariant. Mathematically, why does Harris' cornerness response function $$R=det(M)-\alpha(trace(M))^2$$ have this rotation invariance property \textbf{without} needing to perform a factorization of $M$, i.e., via eigendecomposition to find the principal directions (eigenvectors)?
+\end{subquestion}
+
+\begin{answer}[height=24]
 TODO: Your answer here.
 \end{answer}
 
@@ -163,7 +198,7 @@ TODO: Your answer here.
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{question}[points=9,drawbox=false] 
+\begin{question}[points=10,drawbox=false] 
 One use of local feature description and matching is \href{https://youtu.be/xD88Qs_DZp4?t=12}{fingerprint recognition}---please watch the video and note the similarity to our task in this homework.
 
 \begin{minipage}{0.7\linewidth}
@@ -184,29 +219,8 @@ If you don't know, then try to find the answer online. \textbf{[4--6 sentences]}
 \begin{answer}[height=14]
 TODO your answer here.
 \end{answer}
-
+    
 \pagebreak
-
-\begin{subquestion}[points=3]
-How might someone use computer vision to steal or spoof your biometric data to gain access? \emph{This could be across reconstruction, recognition, or (re)organization.} \textbf{[3--5 sentences]}
-\end{subquestion}
-
-\begin{answer}[height=14]
-TODO your answer here.
-\end{answer}
-    
-
-\begin{subquestion}[points=3]
-Biometric recognition systems may not affect all people equally. For a biometric identification system, define a group of people and describe how they might be affected disproportionately. \textbf{[3--5 sentences]}
-\end{subquestion}
-    
-\begin{answer}[height=14]
-TODO your answer here.
-\end{answer}
-    
-
-\pagebreak
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{subquestion}[points=7,drawbox=false] 
 Brown University decides to entirely replace passwords with biometric data to authenticate student identity on its computer systems. Given how accurate your feature matching homework 2 code is, Brown asks you to develop the authentication system as your CSCI 1430 final project. Lucky you.
