@@ -33,30 +33,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{question}[points=10] 
-Let's look again at the Fourier decomposition demo that we saw in class. The Fourier transform lets us operate on images with respect to their frequency content via the \textbf{amplitude} (or magnitude) and the \textbf{phase}. Navigate to the \texttt{questions} folder. Then, within your virtual environment, run the following command:
+Let's look at the Fourier transform demo from class. The Fourier transform lets us operate on images with respect to their frequency content via the \textbf{amplitude} (or magnitude) and the \textbf{phase}. From your uv environment, run these commands:
 \begin{verbatim}
 $ uv pip install dearpygui
 $ cd questions/fourierdemo
 $ uv run python liveFourier.py
 \end{verbatim}
 Play with the demo!
-To consider the properties of the Fourier domain, it will help to use 'Cat Mode' so that we see a fixed image (of a cat).
+To consider the properties of the Fourier domain, it will help to use `Cat Mode' so that we see a fixed image (of a cat).
 
 Then, for each transform listed in the rows below, please place \filled~in the columns that best describe the effects. There may be multiple for each row, or none.
 
 \begin{itemize}
     \item In the demo, you may see minor changes in amplitude/phase due to image resampling, quantization, and clipping; try to ignore these and think about the \textbf{fundamental properties}: what should happen to amplitude and phase?
     \item $I$ represents the image intensity, $x$ represents the image's pixel coordinates.
-    \item ``Scales same'' means shrinks when the input shrinks. \item ``Scales inverse'' means expands when the input shrinks.
+    \item ``DC only'' means effect is only on zero-frequency component (DC offset).
+    \item ``Scales same'' means shrinks when the input shrinks; ``Scales inverse'' means expands when input shrinks.
 \end{itemize}
 \end{question}
 
 \begin{answer}\noindent
 \setlength{\tabcolsep}{11pt}
 \begin{tabular}{l|c|c|c|c|c|c|c}
-\textbf{Input transform} & \rotatebox{90}{\textbf{Invariant}} & \rotatebox{90}{\textbf{Brighter}} & \rotatebox{90}{\textbf{DC only}} & \rotatebox{90}{\textbf{2D translates}} & \rotatebox{90}{\textbf{2D rotates}} & \rotatebox{90}{\textbf{2D scales same}} & \rotatebox{90}{\textbf{2D scales inverse}} \\
+\textbf{Input transform} & \rotatebox{90}{\textbf{Invariant}} & \rotatebox{90}{\textbf{Intensity increases}} & \rotatebox{90}{\textbf{DC only}} & \rotatebox{90}{\textbf{2D translates}} & \rotatebox{90}{\textbf{2D rotates}} & \rotatebox{90}{\textbf{2D scales same}} & \rotatebox{90}{\textbf{2D scales inverse}} \\
 \hline
-\textbf{Change intensity} ($I += 20$) & & & & & & & \\
+\textbf{Change intensity} ($I += 0.2$) & & & & & & & \\
 \hspace{0.1cm} \textit{Effect on amplitude} & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
 \hspace{0.1cm} \textit{Effect on phase}     & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox & \cbox \\
 \hline
