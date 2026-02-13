@@ -33,92 +33,65 @@ def cheat_feature_points(eval_file, scale_factor):
 
 	return x1, y1, x2, y2
 
-def estimate_fundamental_matrix(ground_truth_correspondence_file):
-    F_path = ground_truth_correspondence_file[:-3] + 'npy'
-    return np.load(F_path)
-
 def evaluate_correspondence(img_A, img_B, ground_truth_correspondence_file,
 	scale_factor, x1_est, y1_est, x2_est, y2_est, matches, filename="notre_dame_matches.jpg"):
 
-	# 'unscale' feature points to compare with ground truth points
+	if len(matches) == 0:
+		print('No matches to evaluate.')
+		return 0
+
+	# Unscale student coordinates to original image space
 	x1_est_scaled = x1_est / scale_factor
 	y1_est_scaled = y1_est / scale_factor
 	x2_est_scaled = x2_est / scale_factor
 	y2_est_scaled = y2_est / scale_factor
 
-	# we want to see how good our matches are, extract the coordinates of each matched
-	# point
+	# Extract matched point coordinates
+	idx1 = matches[:, 0].astype(int)
+	idx2 = matches[:, 1].astype(int)
+	pts1_m = np.column_stack([x1_est_scaled[idx1], y1_est_scaled[idx1]])  # (M, 2)
+	pts2_m = np.column_stack([x2_est_scaled[idx2], y2_est_scaled[idx2]])  # (M, 2)
 
-	x1_matches = np.zeros(matches.shape[0])
-	y1_matches = np.zeros(matches.shape[0])
-	x2_matches = np.zeros(matches.shape[0])
-	y2_matches = np.zeros(matches.shape[0])
-
-	for i in range(matches.shape[0]):
-
-		x1_matches[i] = x1_est_scaled[int(matches[i, 0])]
-		y1_matches[i] = y1_est_scaled[int(matches[i, 0])]
-		x2_matches[i] = x2_est_scaled[int(matches[i, 1])]
-		y2_matches[i] = y2_est_scaled[int(matches[i, 1])]
-
-	good_matches = np.zeros((matches.shape[0]), dtype=bool)
-
-	# Loads `ground truth' positions x1, y1, x2, y2
+	# Load ground truth correspondences
 	file_contents = scio.loadmat(ground_truth_correspondence_file)
+	x1_gt = file_contents['x1'].ravel()
+	y1_gt = file_contents['y1'].ravel()
+	x2_gt = file_contents['x2'].ravel()
+	y2_gt = file_contents['y2'].ravel()
+	pts1_gt = np.column_stack([x1_gt, y1_gt])  # (G, 2)
+	pts2_gt = np.column_stack([x2_gt, y2_gt])  # (G, 2)
 
-	# x1, y1, x2, y2 = scio.loadmat(eval_file)
-	x1 = file_contents['x1'].ravel()
-	y1 = file_contents['y1'].ravel()
-	x2 = file_contents['x2'].ravel()
-	y2 = file_contents['y2'].ravel()
+	# Compute symmetric transfer error for each student match against all GT pairs.
+	# For match i and GT pair j: error = max(||p1_est_i - p1_gt_j||, ||p2_est_i - p2_gt_j||)
+	# Then match_error_i = min_j(error_ij)
+	d1 = np.sqrt(((pts1_m[:, None, :] - pts1_gt[None, :, :]) ** 2).sum(axis=2))  # (M, G)
+	d2 = np.sqrt(((pts2_m[:, None, :] - pts2_gt[None, :, :]) ** 2).sum(axis=2))  # (M, G)
+	match_errors = np.maximum(d1, d2).min(axis=1)  # (M,)
 
-	pointsA = np.zeros((len(x1), 2))
-	pointsB = np.zeros((len(x2), 2))
+	# AUC across thresholds 1..100 pixels
+	max_threshold = 100
+	thresholds = np.arange(1, max_threshold + 1)
+	accuracies = np.array([(match_errors < t).mean() for t in thresholds])
+	auc_score = int(np.round(accuracies.mean() * 100))
 
-	for i in range(len(x1)):
-		pointsA[i, 0] = x1[i]
-		pointsA[i, 1] = y1[i]
-		pointsB[i, 0] = x2[i]
-		pointsB[i, 1] = y2[i]
+	# Good matches for visualization (correct within 50 pixels)
+	good_matches = match_errors < 50
 
-	correct_matches = 0
+	# Print accuracy at distance thresholds
+	print(f'Accuracy at distance thresholds ({len(matches)} matches):')
+	print(f'(acc@Xpx = % of matches within X pixels of a ground truth match)')
+	for t in [3, 5, 10, 25, 50]:
+		acc_at_t = (match_errors < t).mean() * 100
+		print(f'  acc@{t}px: {acc_at_t:.1f}%')
+	print(f'  Median error: {np.median(match_errors):.1f}px')
+	print(f'  Area under curve (AUC): {auc_score}%')
+	print(f'  (AUC averages accuracy across all thresholds from 1 to 100px.'
+		  f' A perfect score is 100%.)')
 
-	F = estimate_fundamental_matrix(ground_truth_correspondence_file)
+	print("Visualizing...")
+	visualize.show_correspondences(img_A, img_B, x1_est / scale_factor, y1_est / scale_factor, x2_est / scale_factor, y2_est / scale_factor, matches, good_matches, filename, match_errors)
 
-	for i in range(x1_matches.shape[0]):
-		pointA = np.ones((1, 3))
-		pointB = np.ones((1, 3))
-		pointA[0,0] = x1_matches[i]
-		pointA[0,1] = y1_matches[i]
-		pointB[0,0] = x2_matches[i]
-		pointB[0,1] = y2_matches[i]
-
-
-		if abs(pointB @ F @ np.transpose(pointA)) < .1:
-			x_dists = x1 - x1_matches[i]
-			y_dists = y1 - y1_matches[i]
-
-			# computes distances of each feature point to the ground truth point
-			dists = np.sqrt(np.power(x_dists, 2.0) + np.power(y_dists, 2.0))
-			closest_ground_truth = np.argmin(dists, axis=0)
-			offset_x1 = x1_matches[i] - x1[closest_ground_truth]
-			offset_y1 = y1_matches[i] - y1[closest_ground_truth]
-			offset_x1 *= img_B.shape[0] / img_A.shape[0]
-			offset_y1 *= img_B.shape[0] / img_A.shape[0]
-			offset_x2 = x2_matches[i] - x2[closest_ground_truth]
-			offset_y2 = y2_matches[i] - y2[closest_ground_truth]
-			offset_dist = np.sqrt(np.power(offset_x1 - offset_x2, 2) + np.power(offset_y1 - offset_y2, 2))
-			if offset_dist < 70:
-				correct_matches += 1
-				good_matches[i] = True
-
-	accuracy = int(100 * correct_matches / len(matches)) if len(matches) else 0
-	print(f'Accuracy on all matches: {accuracy}%')
-
-	print("Vizualizing...")
-	visualize.show_correspondences(img_A, img_B, x1_est / scale_factor, y1_est / scale_factor, x2_est / scale_factor, y2_est / scale_factor, matches, good_matches, filename)
-
-	return accuracy
+	return auc_score
 
 
 # ---------------------------------------------------------------------------
