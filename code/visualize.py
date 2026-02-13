@@ -1,5 +1,5 @@
 
-from skimage.feature import plot_matches
+from skimage.feature import plot_matched_features
 import matplotlib
 #matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
@@ -11,20 +11,29 @@ def show_correspondences(imgA, imgB, X1, Y1, X2, Y2, matches, good_matches, file
 		Visualizes corresponding points between two images, either as
 		arrows or dots
 
+		mode='dots': Corresponding points will have the same random color
+		mode='arrows': Corresponding points will be joined by a line
+
 		Writes out a png of the visualization if 'filename' is not None.
 	'''
 
+	# generates unique figures so students can
+	# look at all three at once
 	fig, ax = plt.subplots(nrows=1, ncols=1)
 
 	kp1 = zip_x_y(Y1, X1)
 	kp2 = zip_x_y(Y2, X2)
 	matches = matches.astype(int)
-	plot_matches(ax, imgA, imgB, kp1, kp2, matches[np.logical_not(good_matches)], matches_color='orangered')
-	plot_matches(ax, imgA, imgB, kp1, kp2, matches[good_matches], matches_color='springgreen')
+	plot_matched_features(imgA, imgB,
+		keypoints0=kp1, keypoints1=kp2,
+		matches=matches[np.logical_not(good_matches)],
+		ax=ax, matches_color='orangered')
+	plot_matched_features(imgA, imgB,
+		keypoints0=kp1, keypoints1=kp2,
+		matches=matches[good_matches],
+		ax=ax, matches_color='springgreen')
 
 	fig = plt.gcf()
-	plt.title('Correspondences between feature points')
-	plt.axis('off')
 	plt.show()
 
 	if filename:
@@ -39,9 +48,14 @@ def show_correspondences_custom_image(imgA, imgB, X1, Y1, X2, Y2, matches, scale
 		Visualizes corresponding points between two images, either as
 		arrows or dots. Unlike show_correspondences, does not take correct_matches argument
 
+		mode='dots': Corresponding points will have the same random color
+		mode='arrows': Corresponding points will be joined by a line
+
 		Writes out a png of the visualization if 'filename' is not None.
 	'''
 
+	# generates unique figures so students can
+	# look at all three at once
 	fig, ax = plt.subplots(nrows=1, ncols=1)
 
 	x1_scaled = X1 / scale_factor
@@ -52,11 +66,12 @@ def show_correspondences_custom_image(imgA, imgB, X1, Y1, X2, Y2, matches, scale
 	kp1 = zip_x_y(y1_scaled, x1_scaled)
 	kp2 = zip_x_y(y2_scaled, x2_scaled)
 	matches = matches.astype(int)
-	plot_matches(ax, imgA, imgB, kp1, kp2, matches, matches_color='yellow')
+	plot_matched_features(imgA, imgB,
+		keypoints0=kp1, keypoints1=kp2,
+		matches=matches,
+		ax=ax, matches_color='yellow')
 
 	fig = plt.gcf()
-	plt.title('Correspondences between feature points')
-	plt.axis('off')
 	plt.show()
 
 	if filename:

@@ -1,7 +1,9 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage import filters, feature
 from skimage.measure import regionprops
+from helpers import compute_dino_feature_map, sample_dino_descriptors
 
 def plot_feature_points(image, xs, ys):
     '''
@@ -27,17 +29,19 @@ def get_feature_points(image, window_width):
     '''
     Implement the Harris corner detector to return feature points for a given image.
 
-    You do not need to worry about scale invariance or keypoint orientation estimation
-    for your Harris corner detector.
+    For our toy implementation, it is fine to ignore scale invariance 
+    and keypoint orientation estimation for your Harris corner detector.
+    
+    Approach
+    1. Calculate the gradient (partial derivatives on two directions).
+    2. Apply Gaussian filter with appropriate sigma.
+    3. Calculate Harris cornerness score for all pixels.
+    4. Peak local max to eliminate clusters. (Try different parameters.)
 
     If you're finding spurious (false/fake) feature point detections near the boundaries,
     it is safe to suppress the gradients / corners near the edges of the image.
 
-    Useful functions: A working solution does not require the use of all of these
-    functions, but depending on your implementation, you may find some useful. Please
-    reference the documentation for each function/library and feel free to come to hours
-    or post on EdStem with any questions
-
+    Useful functions: 
         - skimage.feature.peak_local_max (experiment with different min_distance values to get good results)
         - skimage.measure.regionprops
           
@@ -59,11 +63,6 @@ def get_feature_points(image, window_width):
 
     '''
 
-    # STEP 1: Calculate the gradient (partial derivatives on two directions).
-    # STEP 2: Apply Gaussian filter with appropriate sigma.
-    # STEP 3: Calculate Harris cornerness score for all pixels.
-    # STEP 4: Peak local max to eliminate clusters. (Try different parameters.)
-
     # TODO: Your implementation here!
     # These are placeholders - replace with the coordinates of your feature points!
     rng = np.random.default_rng()
@@ -73,120 +72,92 @@ def get_feature_points(image, window_width):
     return xs, ys
 
 
-def get_feature_descriptors(image, xs, ys, window_width, mode):
+def get_feature_descriptors(image, xs, ys, window_width, mode, image_file=None):
     '''
-    Computes features for a given set of feature points.
+    Computes a feature descriptor for each feature point.
 
-    To start with, use image patches as your local feature descriptor. You will 
-    then need to implement the more effective SIFT-like feature descriptor. Use 
-    the `mode` argument to toggle between the two.
-    (Original SIFT publications at http://www.cs.ubc.ca/~lowe/keypoints/)
+    Implement two modes (use the `mode` argument to toggle):
+      "patch" — simple image patch descriptor
+      "sift"  — SIFT-like gradient histogram descriptor
 
-    Your implementation does not need to exactly match the SIFT reference.
-    Here are the key properties your (baseline) feature descriptor should have:
-    (1) A 4x4 grid of cells, each feature_width / 4 pixels square.
-    (2) Each cell should have a histogram of the local distribution of
-        gradients in 8 orientations. Appending these histograms together will
-        give you 4 x 4 x 8 = 128 dimensions.
-    (3) Each feature should be normalized to unit length.
+    Compare to a third mode using state of the art features
+    No implementation necessary:
+      "dinov3" - self-supervised deep learned generic features
 
-    This is a design task, so many options might help but are not essential.
-    - To perform interpolation such that each gradient
-    measurement contributes to multiple orientation bins in multiple cells
-    A single gradient measurement creates a weighted contribution to the 4 
-    nearest cells and the 2 nearest orientation bins within each cell, for 
-    8 total contributions.
+    IMAGE PATCH:
+      1. Cut out a window_width x window_width patch around each point.
+      2. Flatten to a 1-d vector and normalize to unit length.
 
-    - To compute the gradient orientation at each pixel, we could use oriented 
-    kernels (e.g. a kernel that responds to edges with a specific orientation). 
-    All of your SIFT-like features could be constructed quickly in this way.
+    SIFT (see Lowe, http://www.cs.ubc.ca/~lowe/keypoints/):
+      1. Compute image gradients (magnitude and orientation).
+      2. For each point, divide the window into a 4x4 grid of cells
+         (each cell is window_width/4 pixels).
+      3. In each cell, bin gradient magnitudes into 8 orientation bins.
+      4. Concatenate all histograms → 4x4x8 = 128-d vector.
+      5. Normalize to unit length.
 
-    - You could normalize -> threshold -> normalize again as detailed in the 
-    SIFT paper. This might help for specular or outlier brightnesses.
-
-    - You could raise each element of the final feature vector to some power 
-    that is less than one.
-
-    Useful functions: A working solution does not require the use of all of these
-    functions, but depending on your implementation, you may find some useful. Please
-    reference the documentation for each function/library and feel free to come to hours
-    or post on EdStem with any questions
-
-        - skimage.filters (library)
+    Optional enhancements for better performance:
+      - Interpolate contributions across neighboring cells and bins.
+      - Normalize → threshold at 0.2 → re-normalize (reduces lighting effects).
+      - Raise elements to a power < 1 (e.g., sqrt) for robustness.
 
     :params:
     :image: a grayscale or color image (your choice depending on your implementation)
     :xs: np.array of x coordinates (column indices) of feature points
     :ys: np.array of y coordinates (row indices) of feature points
-    :window_width: in pixels, is the local window width. You can assume
-                    that window_width will be a multiple of 4 (i.e. every cell of your
-                    local SIFT-like window will have an integer width and height).
-    :mode: a string, either "patch" or "sift". Switches between image patch descriptors
-           and SIFT descriptors
-
-    If you want to detect and describe features at multiple scales or
-    particular orientations you can add input arguments. Make sure input arguments 
-    are optional or the autograder will break.
+    :window_width: in pixels, is the local window width (always a multiple of 4).
+    :mode: "patch", "sift", or "dinov3"
+    :image_file: (optional) path to the image file, used for DINOv3 cache lookup
 
     :returns:
-    :features: np.array of computed features. features[i] is the descriptor for 
-               point (x[i], y[i]), so the shape of features should be 
-               (len(x), feature dimensionality). For standard SIFT, `feature
-               dimensionality` is typically 128. `num points` may be less than len(x) if
-               some points are rejected, e.g., if out of bounds.
+    :features: np.array of shape (len(xs), feature_dim). For SIFT, feature_dim = 128.
     '''
 
-    # IMAGE PATCH STEPS
-    # STEP 1: For each feature point, cut out a window_width x window_width patch 
-    #         of the image around that point (as you will in SIFT)
-    # STEP 2: Flatten this image patch into a 1-dimensional vector (hint: np.flatten())
-    
-    # SIFT STEPS
-    # STEP 1: Calculate the gradient (partial derivatives on two directions) on all pixels.
-    # STEP 2: Decompose the gradient vectors to magnitude and orientation (angle).
-    # STEP 3: For each feature point, calculate the local histogram based on related 4x4 grid cells.
-    #         Each cell is a square with feature_width / 4 pixels length of side.
-    #         For each cell, we assign these gradient vectors corresponding to these pixels to 8 bins
-    #         based on the orientation (angle) of the gradient vectors. 
-    # STEP 4: Now for each cell, we have a 8-dimensional vector. Appending the vectors in the 4x4 cells,
-    #         we have a 128-dimensional feature.
-    # STEP 5: Don't forget to normalize your feature.
+    if mode == "patch":
+        # TODO: Your implementation here!
+        # These are placeholders - replace with your feature descriptors!
+        rng = np.random.default_rng()
+        features = rng.integers(0, 255, size=(len(xs), 128))
 
-    # TODO: Your implementation here!
-    # These are placeholders - replace with the coordinates of your feature points!
-    rng = np.random.default_rng()
-    features = rng.integers(0, 255, size=(len(xs), rng.integers(1, 200)))
+    elif mode == "sift":
+        # TODO: Your implementation here!
+        # These are placeholders - replace with your feature descriptors!
+        rng = np.random.default_rng()
+        features = rng.integers(0, 255, size=(len(xs), 128))
+
+    elif mode == "dinov3":
+        # DINOv3 is handled here — you don't need to implement it.
+        cache_path = os.path.splitext(image_file)[0] + "_dinov3.npz" if image_file else None
+        fmap, meta = compute_dino_feature_map(image, cache_path=cache_path)
+        features = sample_dino_descriptors(fmap, meta, xs, ys)
+
 
     return features
 
 
 def match_features(im1_features, im2_features):
     '''
-    Matches feature descriptors of one image with their nearest neighbor in the other.
+    Matches feature descriptors of one image with their nearest neighbor 
+    in the other via the Nearest Neighbor Distance Ratio (NNDR) Test.
 
-    Implements the Nearest Neighbor Distance Ratio (NNDR) Test to help threshold
-    and remove false matches.
+    NNDR will return a number close to 1 for feature points with 
+    similar distances. Think about how you might want to threshold
+    this ratio (hint: see lecture slides for NNDR).
 
-    Please implement the "Nearest Neighbor Distance Ratio (NNDR) Test".
+    A match is between a feature in im1_features and a feature in im2_features.
+    We can represent this match as the index of the feature in im1_features
+    and the index of the feature in im2_features.
 
-    For extra credit you can implement spatial verification of matches.
-
-    Remember that the NNDR will return a number close to 1 for feature 
-    points with similar distances. Think about how you might want to threshold
-    this ratio (hint: see lecture slides for NNDR)
+    Approach:
+    1. Calculate the distances between each pair of features between im1 and im2.
+    2. Sort and find closest features for each feature.
+    3. Compute NNDR for each match.
+    4. Remove matches whose ratios do not meet a certain threshold.
 
     This function does not need to be symmetric (e.g., it can produce
     different numbers of matches depending on the order of the arguments).
 
-    A match is between a feature in im1_features and a feature in im2_features. We can
-    represent this match as a the index of the feature in im1_features and the index
-    of the feature in im2_features
-
-    Useful functions: A working solution does not require the use of all of these
-    functions, but depending on your implementation, you may find some useful. Please
-    reference the documentation for each function/library and feel free to come to hours
-    or post on EdStem with any questions
-
+    Useful functions: 
         - np.argsort()
 
     :params:
@@ -198,13 +169,8 @@ def match_features(im1_features, im2_features):
             column is an index into im1_features and the second column is an index into im2_features
     '''
     
-    # STEP 1: Calculate the distances between each pairs of features between im1_features and im2_features.
-    # STEP 2: Sort and find closest features for each feature
-    # STEP 3: Compute NNDR for each match
-    # STEP 4: Remove matches whose ratios do not meet a certain threshold 
-
     # TODO: Your implementation here!
-    # These are placeholders - replace with the coordinates of your feature points!
+    # These are placeholders - replace with your matches!
     rng = np.random.default_rng()
     matches = rng.integers(0, min(len(im1_features), len(im2_features)), size=(50, 2))
 
