@@ -194,13 +194,15 @@ def main():
 
     print("Matches: " + str(matches.shape[0]))
     
+    filename = f'{args.data}_matches_{args.mode}.png'
+
     if args.data == "custom":
         print("Visualizing on custom images...")
-        visualize.show_correspondences_custom_image(image1_color, image2_color, x1, y1, x2, 
-            y2, matches, scale_factor, args.data + '_matches.png')
+        visualize.show_correspondences_custom_image(image1_color, image2_color, x1, y1, x2,
+            y2, matches, scale_factor, filename)
     else:
         evaluate_correspondence(image1_color, image2_color, eval_file, scale_factor,
-            x1, y1, x2, y2, matches, args.data + '_matches.png')
+            x1, y1, x2, y2, matches, filename)
 
     return
 
