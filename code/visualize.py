@@ -38,6 +38,11 @@ def show_correspondences(imgA, imgB, X1, Y1, X2, Y2, matches, good_matches, file
 		matches=matches[good_matches],
 		ax=ax, matches_color='springgreen')
 
+	n_good = int(good_matches.sum())
+	n_total = len(good_matches)
+	n_bad = n_total - n_good
+	ax.set_title(f'Matches: {n_good} good / {n_bad} bad / {n_total} total', fontsize=10)
+
 	if match_errors is not None:
 		max_threshold = 100
 		thresholds = np.arange(1, max_threshold + 1)
