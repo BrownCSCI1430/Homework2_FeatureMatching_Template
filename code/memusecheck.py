@@ -25,10 +25,10 @@ def memfunc():
     image1_features = student.get_feature_descriptors(image1, x1, y1, feature_width)
     image2_features = student.get_feature_descriptors(image2, x2, y2, feature_width)
         
-    matches, confidences = student.match_features(image1_features, image2_features)
+    matches = student.match_features(image1_features, image2_features)
 
     evaluate_correspondence(image1, image2, eval_file, scale_factor,
-        x1, y1, x2, y2, matches, confidences, 0)
+        x1, y1, x2, y2, matches)
 
 if __name__ == "__main__":
     memuse = max(memory_profiler.memory_usage(proc=memfunc))
